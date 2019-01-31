@@ -17,6 +17,7 @@ def main():
 
     # list all images
     files = [f for f in os.listdir(args.folder) if imghdr.what(os.path.join(args.folder, f)) is not None]
+    files.sort()
 
     # read image and show
     wait_time = 100
@@ -40,7 +41,7 @@ def main():
         elif key == ord('s') or key == ord('S'):  # slower
             wait_time += 50
         elif key == ord('a') or key == ord('A'):  # last
-            i = min(0, i - 5)
+            i = max(0, i - 5)
         elif key == ord('a') or key == ord('A'):  # next
             i += 5
         elif key == 27 or key == ord('x') or key == ord('X'):  # exit
