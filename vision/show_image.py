@@ -12,6 +12,8 @@ def main():
     # argument parser
     parser = argparse.ArgumentParser(description='Show Image in Folder')
     parser.add_argument('--folder', required=True, help='image folder')
+    parser.add_argument('--max_size', default=1000, help='max image size to show')
+    parser.add_argument('--wait_time', type=int, default=100, help='initial wait time(ms)')
     args = parser.parse_args()
     print(args)
 
@@ -20,13 +22,14 @@ def main():
     files.sort()
 
     # read image and show
-    wait_time = 100
+    wait_time = args.wait_time
+    step = 1
     i = 0
     while i < len(files):
         # read image and resize if it's too large
         image = cv.imread(os.path.join(args.folder, files[i]), cv.IMREAD_UNCHANGED)
-        if max(image.shape) > 500:
-            ratio = 500 / max(image.shape)
+        if max(image.shape) > args.max_size:
+            ratio = args.max_size / max(image.shape)
             image = cv.resize(image, (-1, -1), fx=ratio, fy=ratio)
 
         # draw index and file name
@@ -37,13 +40,19 @@ def main():
         cv.imshow('Image', image)
         key = cv.waitKey(wait_time)
         if key == ord('w') or key == ord('W'):  # faster
-            wait_time = max(10, wait_time - 50)
+            if wait_time > 5:
+                wait_time = max(5, wait_time - 10)
+            else:
+                step += 1
         elif key == ord('s') or key == ord('S'):  # slower
-            wait_time += 50
+            if step > 1:
+                step -= 1
+            else:
+                wait_time += 10
         elif key == ord('a') or key == ord('A'):  # last
-            i = max(0, i - 5)
+            i = max(0, i - 5 * step)
         elif key == ord('a') or key == ord('A'):  # next
-            i += 5
+            i += 5 * step
         elif key == 27 or key == ord('x') or key == ord('X'):  # exit
             break
         elif key == ord(' '):  # pause
@@ -53,7 +62,7 @@ def main():
             else:
                 wait_time = last_wait_time
         else:
-            i += 1
+            i += step
 
 
 if __name__ == '__main__':
