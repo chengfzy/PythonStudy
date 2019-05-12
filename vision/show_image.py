@@ -4,7 +4,6 @@ Show image in folder
 import argparse
 import imghdr
 import os
-
 import cv2 as cv
 
 
