@@ -10,6 +10,16 @@ Some Useful Code about Python3
 1. line_fitting: 3D line fitting using SVD and optimization method
     - The opt method is not finished due to not familiar with the optimization using python, check matlab script for reference
 1. plane_fitting: 3D plane fitting using SVD
+1. opt_unconstrained_minimize  \
+    Solve the Rosenbrock function of N variables. Ref: https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#unconstrained-minimization-of-multivariate-scalar-functions-minimize
+1. opt_least_square \
+    Solve least square function. Ref: https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#least-squares-minimization-least-squares
+1. opt_bundle_adjustment    \
+    Use SciPy to solve bundle adjustment. Ref: https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html.
+    Save problem using ceres can be found in 
+    http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
+    
+    
 
 ## vision
 1. show_image: show image in folder with some basic controller
