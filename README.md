@@ -24,6 +24,7 @@ Some Useful Code about Python3
 ## vision
 1. show_image: show image in folder with some basic controller
 1. resize_image: Read image in folder, resize it and save to file with .jpg format
+1. generate_chessboard: generate chessboard and save into pdf file
 
 # Notes
 1. If some dependencies are need for OpenCV library, and the `PATH` and `LD_LIBRARY_PATH` are set by terminal, we should open `PyCharm` in terminal and then open python project.
