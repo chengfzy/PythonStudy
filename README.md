@@ -18,7 +18,8 @@ Some Useful Code about Python3
     Use SciPy to solve bundle adjustment. Ref: https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html.
     Save problem using ceres can be found in 
     http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
-    
+1. huber_loss   \
+    Plot the huber loss function, the huber loss are define in [wiki]( https://en.wikipedia.org/wiki/Huber_loss)
     
 
 ## vision
