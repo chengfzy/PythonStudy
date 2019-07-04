@@ -11,15 +11,18 @@ Some Useful Code about Python3
     - The opt method is not finished due to not familiar with the optimization using python, check matlab script for reference
 1. plane_fitting: 3D plane fitting using SVD
 1. opt_unconstrained_minimize  \
-    Solve the Rosenbrock function of N variables. Ref: https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#unconstrained-minimization-of-multivariate-scalar-functions-minimize
+    Solve the Rosenbrock function of N variables. [Ref](https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#unconstrained-minimization-of-multivariate-scalar-functions-minimize)
 1. opt_least_square \
-    Solve least square function. Ref: https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#least-squares-minimization-least-squares
+    Solve least square function. [Ref](https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#least-squares-minimization-least-squares)
 1. opt_bundle_adjustment    \
-    Use SciPy to solve bundle adjustment. Ref: https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html.
-    Save problem using ceres can be found in 
-    http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
+    Use SciPy to solve bundle adjustment. [Ref](https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html).
+    Same problem using ceres can be found in 
+    [link](http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment)
 1. huber_loss   \
     Plot the huber loss function, the huber loss are define in [wiki]( https://en.wikipedia.org/wiki/Huber_loss)
+1. bspline_curve \
+    Some function about B-spline.
+    Ref: [scipy BSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.BSpline.html)
     
 
 ## vision
