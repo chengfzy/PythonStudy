@@ -1,5 +1,4 @@
-import numpy as np
-import common.debug_info as debug_info
+import numpy as npv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -19,16 +18,16 @@ def fit_plane_svd(data):
     # params
     abc = vh[-1, :-1]
     abc = abc / np.linalg.norm(abc)
-    d = - np.dot(abc, avg)
+    d = -np.dot(abc, avg)
     return np.hstack((abc, d))
 
 
 def plane_fitting_example():
     """example for 3D line fitting"""
-    print(debug_info.section('3D Plane Fitting'))
+    print(util.Section('3D Plane Fitting'))
 
     # generate 3D points data, ax + by + cz + d = 0
-    print(debug_info.section('Generate 3D Points Data'))
+    print(util.Section('Generate 3D Points Data'))
     # generate simulated data
     params = np.array([1.0, 2.0, 3.0, 4.0])
     x, y = np.meshgrid(np.arange(-10, 10, 1), np.arange(-10, 10, 1))
@@ -38,7 +37,7 @@ def plane_fitting_example():
     print(f'normalized abcd = {params / np.linalg.norm(params)}')
 
     # plane fitting
-    print(debug_info.section('Generate 3D Points Data'))
+    print(util.Section('Generate 3D Points Data'))
     params_svd = fit_plane_svd(plane_data)
     print(f'SVD, abcd = {params_svd}')
     print(f'SVD, normalized abcd = {params_svd / np.linalg.norm(params_svd)}')

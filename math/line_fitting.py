@@ -1,5 +1,5 @@
 import numpy as np
-import common.debug_info as debug_info
+import util
 import matplotlib.pyplot as plt
 import scipy.optimize as opt
 from mpl_toolkits.mplot3d import Axes3D
@@ -42,10 +42,10 @@ def fit_line_opt(data):
 
 def line_fit_example():
     """example for 3D line fitting"""
-    print(debug_info.section('3D Line Fitting'))
+    print(util.Section('3D Line Fitting'))
 
     # generate 3D points data, [x, y, z] = [a * t + x0, b * t + y0, c * t + z0]
-    print(debug_info.section('Generate 3D Points Data'))
+    print(util.Section('Generate 3D Points Data'))
     abc = np.array([0.5, 0.6, 0.7])
     xyz0 = np.array([1.0, 2.0, 3.0])
     t = np.arange(-3.0, 3.0, 1)
@@ -55,7 +55,7 @@ def line_fit_example():
     print(f'abc = {abc}, xyz0 = {xyz0}')
 
     # 3D line fitting using SVD
-    print(debug_info.sub_section('Fitting use SVD'))
+    print(util.SubSection('Fitting use SVD'))
     abc_svd, xyz0_svd = fit_line_svd(xyz)
     print(f'SVD: abc = {abc_svd}, xyz0 = {xyz0_svd}')
 

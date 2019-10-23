@@ -9,7 +9,7 @@ import urllib3
 import shutil
 import bz2
 import numpy as np
-from common import debug_info
+import util
 import os
 from scipy.sparse import lil_matrix
 import matplotlib.pyplot as plt
@@ -107,7 +107,7 @@ class BundleAdjustment:
                 shutil.copyfileobj(resp, f)
 
     def __read_bal_data(self, file_name):
-        print(debug_info.section('Read Data from File'))
+        print(util.Section('Read Data from File'))
         with bz2.open(file_name, 'rt') as file:
             self.n_cameras, self.n_points, n_observations = map(int, file.readline().split())
             self.camera_indices = np.empty(n_observations, dtype=int)

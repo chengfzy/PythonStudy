@@ -3,8 +3,8 @@ Some Useful Code about Python3
 
 
 # Contents
-## common
-1. debug_info: some useful code to format debug information
+## util
+1. heading: some useful code to format heading information
 
 ## math
 1. line_fitting: 3D line fitting using SVD and optimization method
@@ -29,6 +29,10 @@ Some Useful Code about Python3
 1. show_image: show image in folder with some basic controller
 1. resize_image: Read image in folder, resize it and save to file with .jpg format
 1. generate_chessboard: generate chessboard and save into pdf file
+
+# system
+1. rename_files: rename files in folder
+
 
 # Notes
 1. If some dependencies are need for OpenCV library, and the `PATH` and `LD_LIBRARY_PATH` are set by terminal, we should open `PyCharm` in terminal and then open python project.
