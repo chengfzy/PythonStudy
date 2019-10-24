@@ -61,7 +61,7 @@ def main():
     fig = plt.figure('B-Spline')
     ax = fig.add_subplot(111)
     ax.plot(xx, [bspline(x, t, c, k) for x in xx], 'r-', label='naive')
-    ax.plot(xx, sp1(xx), 'b-', label='BSpline')
+    ax.plot(xx, sp1(xx), 'b.-', label='BSpline')
     ax.grid(True)
     ax.set_title('B-Spline')
     ax.legend(loc='best')
