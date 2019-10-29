@@ -66,7 +66,7 @@ class MyBSpline:
         :return: basic function evaluated value N(i, p, u)
         """
         if degree == 0:
-            return 1.0 if self.knots[index] <= u <= self.knots[index + 1] else 0.0
+            return 1.0 if self.knots[index] <= u < self.knots[index + 1] else 0.0
 
         c1 = self._basic_coeff(u, self.knots[index], self.knots[index + degree])
         c2 = self._basic_coeff(u, self.knots[index + 1], self.knots[index + 1 + degree])
@@ -77,7 +77,7 @@ class MyBSpline:
         """
         Evaluate the coefficient (u - u_i) / (u_{i+p} - u_i) = (u - u0) / (u1 - u0), in basic function
         """
-        if u0 < u1 and u0 <= u <= u1:
+        if u0 < u1 and u0 <= u < u1:
             return (u - u0) / (u1 - u0)
         else:
             return 0

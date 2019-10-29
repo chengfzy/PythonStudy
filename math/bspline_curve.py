@@ -18,7 +18,7 @@ import numpy as np
 def basic(x, i, k, t):
     """Basic elements in B-Spline"""
     if k == 0:
-        return 1.0 if t[i] <= x <= t[i + 1] else 0.0
+        return 1.0 if t[i] <= x < t[i + 1] else 0.0
 
     if t[i + k] == t[i]:
         c1 = 0.0
