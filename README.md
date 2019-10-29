@@ -23,7 +23,11 @@ Some Useful Code about Python3
 1. bspline_curve \
     Some function about B-spline.
     Ref: [scipy BSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.BSpline.html)
-    
+1. bspline  \
+    B-Spline evaluation. \
+    Ref: \
+    1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).   \
+    1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
 
 ## vision
 1. show_image: show image in folder with some basic controller
