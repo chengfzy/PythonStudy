@@ -1,11 +1,13 @@
 import enum
+from colorama import Fore, Back, Style
 
 
 class HeadingType(enum.Enum):
     """ Heading type """
-    Section = 1
-    SubSection = 2
-    Paragraph = 3
+    Title = 1
+    Section = 2
+    SubSection = 3
+    Paragraph = 4
 
 
 class Heading:
@@ -13,30 +15,41 @@ class Heading:
     Heading class, used for print some heading information
     """
 
-    def __init__(self, text: str, break_line: bool, heading_type: HeadingType, par_len: int = 80):
+    def __init__(self, text: str, break_line: bool, heading_type: HeadingType, sec_len: int = 100):
         """
         Init Heading with text, break line, type and paragraph length
         :param text: Heading text
         :param break_line: Flag to indict whether add a new line to show this info
         :param heading_type: Heading type
-        :param par_len: Print length for Paragraph type, and the length of Section and Subsection will be 1.5 * par_len
+        :param sec_len: Print length for section and subsection type, and the length of paragraph will be SecLen / 1.5
         """
-        self.__text = text
-        self.__break_line = break_line
-        self.__heading_type = heading_type
-        self.__par_len = par_len
+        self._text = text
+        self._break_line = break_line
+        self._heading_type = heading_type
+        self._sec_len = sec_len
+
+
+class Title(Heading):
+    """ Title heading """
+
+    def __init__(self, text: str = "", break_line: bool = True):
+        """
+        Init Heading with text and break line
+        :param text: Heading text
+        :param break_line: Flag to indict whether add a new line to show this info
+        """
+        super().__init__(text, break_line, HeadingType.Title)
 
     def __str__(self):
-        str = '\n' if self.__break_line else ''
-        fill_char = '-' if self.__heading_type == HeadingType.SubSection else '='
-        info_len = self.__par_len if self.__heading_type == HeadingType.Paragraph else 1.5 * self.__par_len
-        if len(self.__text) == 0:
-            str += info_len * fill_char
-        else:
-            fill_str = max(5, int((info_len - len(self.__text)) / 2)) * fill_char
-            str += f'{fill_str} {self.__text} {fill_str}'
+        info = '\n' if self._break_line else ''
 
-        return str
+        info_len = max(self._sec_len - 2, len(self._text) + 10)
+        info += f'{Fore.CYAN}{Style.BRIGHT}╔{"":═^{info_len}}╗\n'
+        info += f'║{"":^{info_len}}║\n'
+        info += f'║{" " + self._text + " ":^{info_len}}║\n'
+        info += f'║{"":{info_len}}║\n'
+        info += f'╚{"":═^{info_len}}╝{Style.RESET_ALL}\n'
+        return info
 
 
 class Section(Heading):
@@ -50,6 +63,15 @@ class Section(Heading):
         """
         super().__init__(text, break_line, HeadingType.Section)
 
+    def __str__(self):
+        info = '\n' if self._break_line else ''
+        if len(self._text) == 0:
+            info += f'{Fore.CYAN}{"":═^{self._sec_len}}'
+        else:
+            info += f'{Fore.CYAN}{" " + self._text + " ":═^{max(self._sec_len, len(self._text) + 12)}}'
+        info += f'{Style.RESET_ALL}'
+        return info
+
 
 class SubSection(Heading):
     """ SubSection heading """
@@ -62,6 +84,15 @@ class SubSection(Heading):
         """
         super().__init__(text, break_line, HeadingType.SubSection)
 
+    def __str__(self):
+        info = '\n' if self._break_line else ''
+        if len(self._text) == 0:
+            info += f'{Fore.CYAN}{"":━^{self._sec_len}}'
+        else:
+            info += f'{Fore.CYAN}{" " + self._text + " ":━^{max(self._sec_len, len(self._text) + 12)}}'
+        info += f'{Style.RESET_ALL}'
+        return info
+
 
 class Paragraph(Heading):
     """ Paragraph heading """
@@ -73,3 +104,11 @@ class Paragraph(Heading):
         :param break_line: Flag to indict whether add a new line to show this info
         """
         super().__init__(text, break_line, HeadingType.Paragraph)
+
+    def __str(self):
+        info = '\n' if self._break_line else ''
+        if len(self._text) == 0:
+            info += f'{Fore.CYAN}{"":─^{int(self._sec_len / 1.5)}}'
+        else:
+            info += f'{Fore.CYAN}{" " + self._text + " ":─^{max(int(self._sec_len / 1.5), len(self._text) + 12)}}'
+        info += f'{Style.RESET_ALL}'
