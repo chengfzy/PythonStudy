@@ -1,12 +1,25 @@
 # PythonStudy
-Some Useful Code about Python3
+> Some study code using Python
+
+[TOC]
 
 
-# Contents
-## util
+## Contents
+### util
 1. heading: some useful code to format heading information
 
-## math
+### system
+1. rename_files: rename files in folder
+
+### net
+1. book_converter.py: Convert a book in website with html format to PDF
+
+### others
+1. stock: to monitor the stock price in terminal
+1. stock_cost_calculate: calculate the cost and profile of stock
+
+
+### math
 1. line_fitting: 3D line fitting using SVD and optimization method
     - The opt method is not finished due to not familiar with the optimization using python, check matlab script for reference
 1. plane_fitting: 3D plane fitting using SVD
@@ -29,17 +42,15 @@ Some Useful Code about Python3
     1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).   \
     1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
 
-## vision
+### vision
 1. show_image: show image in folder with some basic controller
 1. resize_image: Read image in folder, resize it and save to file with .jpg format
 1. generate_chessboard: generate chessboard and save into pdf file
 
-# system
-1. rename_files: rename files in folder
 
-# net
-1. book_converter.py: Convert a book in website with html format to PDF
+### dl
+Some code about deep learning
+1. coco2yolo: parse COCO dataset for selected categories and save to YOLO format, it's used for train.
 
-
-# Notes
+## Notes
 1. If some dependencies are need for OpenCV library, and the `PATH` and `LD_LIBRARY_PATH` are set by terminal, we should open `PyCharm` in terminal and then open python project.
