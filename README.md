@@ -51,6 +51,14 @@
 ### dl
 Some code about deep learning
 1. coco2yolo: parse COCO dataset for selected categories and save to YOLO format, it's used for train.
+#### torch_study
+Some study notes using `PyTorch`
+1. 01_network
+1. 02_train_classifier
+1. 03_finetuning \
+    Fine tuning torchvision models.
+    Ref: https://pytorch.org/tutorials/beginner/finetuning_torchvision_models_tutorial.html#
+
 
 ## Notes
 1. If some dependencies are need for OpenCV library, and the `PATH` and `LD_LIBRARY_PATH` are set by terminal, we should open `PyCharm` in terminal and then open python project.
