@@ -53,7 +53,9 @@ Some code about deep learning
 1. coco2yolo: parse COCO dataset for selected categories and save to YOLO format, it's used for train.
 #### torch_study
 Some study notes using `PyTorch`
-1. 01_network
+1. 01_network   \
+    The neural networks.
+    Ref: https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html
 1. 02_train_classifier
 1. 03_finetuning \
     Fine tuning torchvision models.
