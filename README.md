@@ -30,10 +30,11 @@
     Solve least square function. [Ref](https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#least-squares-minimization-least-squares)
 1. opt_bundle_adjustment    \
     Use SciPy to solve bundle adjustment. [Ref](https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html).
-    Same problem using ceres can be found in 
-    [link](http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment)
+    Same problem using ceres can be found in [link](http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment)
 1. huber_loss   \
     Plot the huber loss function, the huber loss are define in [wiki]( https://en.wikipedia.org/wiki/Huber_loss)
+1. compute_correlation \
+    Calculate the time shift using correlation, [Ref](https://towardsdatascience.com/computing-cross-correlation-between-geophysical-time-series-488642be7bf0)
 1. bspline_curve \
     Some function about B-spline.
     Ref: [scipy BSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.BSpline.html)
