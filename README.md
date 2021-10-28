@@ -38,10 +38,10 @@
 1. bspline_curve \
     Some function about B-spline.
     Ref: [scipy BSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.BSpline.html)
-1. bspline  \
-    B-Spline evaluation. \
-    Ref: \
-    1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).   \
+1. bspline
+    B-Spline evaluation.
+    Ref:
+    1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).
     1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
 
 ### vision
@@ -50,10 +50,22 @@
 1. generate_chessboard: generate chessboard and save into pdf file
 
 
+### ml
+##### linear regression
+1. linear_regression \
+    Linear regression example.
+    Ref: [scikit learn example](https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#sphx-glr-auto-examples-linear-model-plot-ols-py)
+1. non_negative_least_squares \
+    Non negative least square regression
+    Ref: [scikit learn example](https://scikit-learn.org/stable/auto_examples/linear_model/plot_nnls.html#sphx-glr-auto-examples-linear-model-plot-nnls-py)
+
+
+
 ### dl
 Some code about deep learning
 1. coco2yolo: parse COCO dataset for selected categories and save to YOLO format, it's used for train.
-#### torch_study
+
+##### torch_study
 Some study notes using `PyTorch`
 1. 01_network   \
     The neural networks.
