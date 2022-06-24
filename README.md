@@ -10,10 +10,11 @@
 
 ### system
 1. rename_files: rename files in folder
-1. elapsed_time.py: code to print elapsed time
+1. elapsed_time: code to print elapsed time
+1. tools: some system tools
 
 ### net
-1. book_converter.py: Convert a book in website with html format to PDF
+1. book_converter: Convert a book in website with html format to PDF
 
 ### others
 1. stock: to monitor the stock price in terminal
@@ -21,6 +22,7 @@
 
 
 ### math
+1. sophus: python version using Sophus
 1. line_fitting: 3D line fitting using SVD and optimization method
     - The opt method is not finished due to not familiar with the optimization using python, check matlab script for reference
 1. plane_fitting: 3D plane fitting using SVD
@@ -45,9 +47,12 @@
     1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
 
 ### vision
+1. misc: convert color, show image, etc
+1. color: define the most used colors using OpenCV
 1. show_image: show image in folder with some basic controller
 1. resize_image: Read image in folder, resize it and save to file with .jpg format
 1. generate_chessboard: generate chessboard and save into pdf file
+1. generate_april_target: generate April target to pdf file
 
 
 ### ml

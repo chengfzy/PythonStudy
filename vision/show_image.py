@@ -1,38 +1,38 @@
 """
-Show image in folder
+Show images in folder
 """
 import argparse
 import imghdr
-import os
+from pathlib import Path
 import cv2 as cv
 
 
-def main():
-    # argument parser
-    parser = argparse.ArgumentParser(description='Show Image in Folder')
-    parser.add_argument('--folder', required=True, help='image folder')
-    parser.add_argument('--max_size', default=1000, help='max image size to show')
-    parser.add_argument('--wait_time', type=int, default=100, help='initial wait time(ms)')
-    args = parser.parse_args()
-    print(args)
+def show(folder: Path, max_size: int = 1080, wait_time: int = 30):
+    """
+    Show image
 
+    Args:
+        folder (Path): Image folder path
+        max_size (int): max image size
+        wait_time (int): wait time, unit: ms
+    """
     # list all images
-    files = [f for f in os.listdir(args.folder) if imghdr.what(os.path.join(args.folder, f)) is not None]
-    files.sort()
+    files = [f for f in folder.iterdir() if f.is_file() and imghdr.what(f) is not None]
+    files.sort(key=lambda v: int(v.stem.split('_')[0]))
 
     # read image and show
-    wait_time = args.wait_time
+    wait_time = wait_time
     step = 1
     i = 0
     while i < len(files):
         # read image and resize if it's too large
-        image = cv.imread(os.path.join(args.folder, files[i]), cv.IMREAD_UNCHANGED)
-        if max(image.shape) > args.max_size:
-            ratio = args.max_size / max(image.shape)
+        image = cv.imread(str(files[i]), cv.IMREAD_UNCHANGED)
+        if max(image.shape) > max_size:
+            ratio = max_size / max(image.shape)
             image = cv.resize(image, (-1, -1), fx=ratio, fy=ratio)
 
         # draw index and file name
-        cv.putText(image, f'[{i}/{len(files)}] {files[i]}', (20, 20), cv.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 1,
+        cv.putText(image, f'[{i}/{len(files)}] {files[i].name}', (20, 20), cv.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 1,
                    cv.LINE_AA)
 
         # show image
@@ -48,11 +48,15 @@ def main():
                 step -= 1
             else:
                 wait_time += 10
-        elif key == ord('a') or key == ord('A'):  # last
+        elif key == ord('a') or key == ord('A'):  # move backward fast
             i = max(0, i - 5 * step)
-        elif key == ord('a') or key == ord('A'):  # next
-            i += 5 * step
-        elif key == 27 or key == ord('x') or key == ord('X'):  # exit
+        elif key == ord('d') or key == ord('D'):  # move forward fast
+            i += 1
+        elif key == ord('h') or key == ord('H'):  # last image
+            i = max(0, i - 1)
+        elif key == ord('j') or key == ord('J'):  # next image
+            i += 1
+        elif key == 27 or key == ord('x') or key == ord('X') or key == ord('q') or key == ord('Q'):  # exit
             break
         elif key == ord(' '):  # pause
             if wait_time > 0:
@@ -65,4 +69,24 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # argument parser
+    help_str = \
+    '''
+Show Images in Folder. Key command:
+    W/w:        Show faster
+    S/s:        Show slower
+    A/a:        Move backward fast
+    D/d:        Move forward fast
+    H/h:        Last image
+    J/j:        Next image
+    Q/q/X/x:    Quit
+    Space:      Pause
+    '''
+    parser = argparse.ArgumentParser(description=help_str, formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('folder', help='image folder')
+    parser.add_argument('--max-size', type=int, default=1080, help='max image size to show')
+    parser.add_argument('--wait-time', type=int, default=30, help='initial wait time(ms)')
+    args = parser.parse_args()
+    print(args)
+
+    show(Path(args.folder).absolute(), args.max_size, args.wait_time)

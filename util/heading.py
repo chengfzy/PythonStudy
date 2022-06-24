@@ -105,10 +105,11 @@ class Paragraph(Heading):
         """
         super().__init__(text, break_line, HeadingType.Paragraph)
 
-    def __str(self):
+    def __str__(self):
         info = '\n' if self._break_line else ''
         if len(self._text) == 0:
             info += f'{Fore.CYAN}{"":─^{int(self._sec_len / 1.5)}}'
         else:
             info += f'{Fore.CYAN}{" " + self._text + " ":─^{max(int(self._sec_len / 1.5), len(self._text) + 12)}}'
         info += f'{Style.RESET_ALL}'
+        return info

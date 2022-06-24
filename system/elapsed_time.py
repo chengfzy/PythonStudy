@@ -1,5 +1,5 @@
 """
-Get the elapased time
+Get the elapsed time
 """
 import time
 from datetime import timedelta

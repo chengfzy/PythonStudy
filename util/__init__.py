@@ -1,1 +1,1 @@
-from .heading import Section, SubSection, Paragraph
+from .heading import Title, Section, SubSection, Paragraph
