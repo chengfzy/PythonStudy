@@ -22,7 +22,6 @@
 
 
 ### math
-1. sophus: python version using Sophus
 1. line_fitting: 3D line fitting using SVD and optimization method
     - The opt method is not finished due to not familiar with the optimization using python, check matlab script for reference
 1. plane_fitting: 3D plane fitting using SVD
@@ -45,6 +44,9 @@
     Ref:
     1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).
     1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
+
+#### sophus
+python version using Sophus
 
 ### vision
 1. misc: convert color, show image, etc
@@ -79,6 +81,11 @@ Some study notes using `PyTorch`
 1. 03_finetuning \
     Fine tuning torchvision models.
     Ref: https://pytorch.org/tutorials/beginner/finetuning_torchvision_models_tutorial.html#
+
+
+#### nuScenes
+Some code about nuScenes dataset
+1. 01_basic: basic usage from tutorials, [Ref](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/tutorials/nuscenes_tutorial.ipynb)
 
 
 ## Notes
