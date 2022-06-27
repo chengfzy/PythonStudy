@@ -89,7 +89,13 @@ Some study notes using `PyTorch`
 
 #### nuScenes
 Some code about nuScenes dataset
-1. 01_basic: basic usage from tutorials, [Ref](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/tutorials/nuscenes_tutorial.ipynb)
+1. 01_basic: \
+    basic usage from tutorials, [Ref](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/tutorials/nuscenes_tutorial.ipynb)
+1. 02_radar: \
+    read and analyze radar data from nuScene dataset
+    Ref:
+        - [nuScenes devkit](https://github.com/nutonomy/nuscenes-devkit)
+        - [nuScenes data schema](https://github.com/nutonomy/nuscenes-devkit/blob/master/docs/schema_nuscenes.md)
 
 
 ## Notes
