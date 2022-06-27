@@ -58,14 +58,18 @@ python version using Sophus
 
 
 ### ml
-##### linear regression
-1. linear_regression \
+##### regression
+1. 01_linear_regression \
     Linear regression example.
     Ref: [scikit learn example](https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#sphx-glr-auto-examples-linear-model-plot-ols-py)
-1. non_negative_least_squares \
+1. 02_non_negative_least_squares \
     Non negative least square regression
     Ref: [scikit learn example](https://scikit-learn.org/stable/auto_examples/linear_model/plot_nnls.html#sphx-glr-auto-examples-linear-model-plot-nnls-py)
 
+#### clustering
+1. 01_dbscan \
+    DBSCAN clustering demo
+    Ref: https://scikit-learn.org/stable/auto_examples/cluster/plot_dbscan.html#sphx-glr-auto-examples-cluster-plot-dbscan-py
 
 
 ### dl
