@@ -196,14 +196,23 @@ def data_visualization(nusc: NuScenes):
     nusc.render_egoposes_on_map(log_location='singapore-onenorth')
 
 
+def get_calibration_params(nusc: NuScenes):
+    print(util.Section('Get Calibration Parameters'))
+    print(util.SubSection('Sensors'))
+    print(f'sensors: {nusc.sensor}')
+    print(util.SubSection('Calibration Parameters'))
+    print(f'calibrated sensor: {nusc.calibrated_sensor}')
+
+
 if __name__ == '__main__':
     print(util.Title('Tutorial'))
     print('Ref: https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/tutorials/nuscenes_tutorial.ipynb')
 
     nusc = NuScenes(version='v1.0-mini', dataroot='/home/jeffery/Documents/DataSet/nuScenes/v1.0-mini', verbose=True)
     # look_at_dataset(nusc)
-    basic(nusc)
-    reverse_index_and_shortcuts(nusc)
-    data_visualization(nusc)
+    # basic(nusc)
+    # reverse_index_and_shortcuts(nusc)
+    # data_visualization(nusc)
+    get_calibration_params(nusc)
 
     plt.show(block=True)
