@@ -55,7 +55,9 @@ python version using Sophus
 1. resize_image: Read image in folder, resize it and save to file with .jpg format
 1. generate_chessboard: generate chessboard and save into pdf file
 1. generate_april_target: generate April target to pdf file
-
+#### Open3D
+1. 01_basic.py \
+    Basic usage for Open3D
 
 ### ml
 ##### regression
