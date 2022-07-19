@@ -63,7 +63,7 @@ def work_with_numpy_4d():
     pcd = o3d.t.geometry.PointCloud()
     pcd.point['positions'] = o3d.core.Tensor(xyzi[:, :3], dtype=o3d.core.Dtype.Float32)
     pcd.point['intensities'] = o3d.core.Tensor(xyzi[:, 3].reshape(xyzi.shape[0], 1), dtype=o3d.core.Dtype.Int16)
-    o3d.t.io.write_point_cloud('./data/point4d.pcd', pcd)
+    o3d.t.io.write_point_cloud('./data/point4d.pcd', pcd, write_ascii=False, compressed=True, print_progress=True)
 
 
 if __name__ == '__main__':
