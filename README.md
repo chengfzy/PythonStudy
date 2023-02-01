@@ -15,6 +15,9 @@
 
 ### net
 1. book_converter: Convert a book in website with html format to PDF
+1. `simple_http_server` \
+    simple http server.
+    Ref: https://bbs.huaweicloud.com/blogs/313283
 
 ### others
 1. stock: to monitor the stock price in terminal
