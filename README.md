@@ -18,6 +18,10 @@
 1. `simple_http_server` \
     simple http server.
     Ref: https://bbs.huaweicloud.com/blogs/313283
+1. `websocket_server` \
+    Web socket server
+1. `websocket_client` \
+    Web socket client
 
 ### others
 1. stock: to monitor the stock price in terminal
