@@ -100,7 +100,9 @@ class Stock:
                 thread.join()
 
     def get_value(self, code_index, code):
-        r = requests.get('http://hq.sinajs.cn/list=' + code, proxies=self.proxies)
+        r = requests.get('https://hq.sinajs.cn/list=' + code,
+                         proxies=self.proxies,
+                         headers={'Referer': 'https://finance.sina.com.cn/'})
         res = r.text[r.text.find('"') + 1:r.text.rfind('"')]
         info = RealTimeInfo(code, res, self.simple)
         return code_index, info
@@ -111,7 +113,7 @@ class Stock:
         """
         self.codes = ['sh000001', 'sz399001']  # init with Shanghai and Shenzhen index
         for c in codes:
-            if c[0] in ('6', '3'):
+            if c[0] in ('6'):
                 self.codes.append('sh' + c)
             else:
                 self.codes.append('sz' + c)
@@ -125,7 +127,7 @@ def main():
     args = parser.parse_args()
 
     # stock codes
-    codes = ['603053', '600584', '002973', '600460']
+    codes = ['002405', '000066']
 
     # monitor
     stock = Stock(codes, thread_num=2, simple=args.simple, proxy=args.proxy)
