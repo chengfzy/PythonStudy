@@ -14,7 +14,7 @@
 1. tools: some system tools
 
 ### net
-1. flask \
+1. flask01_watchlist \
     flask application
     - How to enable debug mode, for flask version > 2.0
         ```sh
@@ -26,6 +26,14 @@
         flask run
         ```
     Ref: https://tutorial.helloflask.com/
+1. flask02_webapi \
+    Use flask to create Web API.
+    1. web01.py \
+        use flask to create RESTful web API.
+        Ref: 
+            - http://www.pythondoc.com/flask-restful/first.html
+            - https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
+            - https://github.com/miguelgrinberg/REST-tutorial/blob/master/rest-server.py
 1. book_converter: Convert a book in website with html format to PDF
 1. `simple_http_server` \
     simple http server.
