@@ -51,7 +51,9 @@ if __name__ == '__main__':
         ])
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
-    url = 'ws://localhost:60002'
+    # url = 'ws://localhost:60002'
+    # url = 'ws://192.168.100.2:60002'
+    url = 'ws://47.98.131.50:60002'
     # url = '127.0.0.1:60010'
     # 1. client using websockets
     # asyncio.get_event_loop().run_until_complete(client(url))

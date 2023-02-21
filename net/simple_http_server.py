@@ -71,6 +71,7 @@ if __name__ == '__main__':
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
     server = HTTPServer(('localhost', 8080), SimpleHttpRequestHandler)
+    logging.info(f'server address: {server.server_address}')
     server.serve_forever()
 
     # test shell command

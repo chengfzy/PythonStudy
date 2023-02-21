@@ -14,6 +14,18 @@
 1. tools: some system tools
 
 ### net
+1. flask \
+    flask application
+    - How to enable debug mode, for flask version > 2.0
+        ```sh
+        flask --debug run
+        ```
+    - `Ctrl+F5` to refresh css style when update for Chrome
+    - add `.flaskenv` file and set environment, and then run
+        ```sh
+        flask run
+        ```
+    Ref: https://tutorial.helloflask.com/
 1. book_converter: Convert a book in website with html format to PDF
 1. `simple_http_server` \
     simple http server.
@@ -22,6 +34,7 @@
     Web socket server
 1. `websocket_client` \
     Web socket client
+
 
 ### others
 1. stock: to monitor the stock price in terminal
