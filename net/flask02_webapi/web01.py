@@ -84,5 +84,14 @@ def update_task(id):
     return jsonify({'task': make_public_task(task[0])})
 
 
+@app.route('/todo/api/v1.0/tasks/<int:id>', methods=['DELETE'])
+def get_task(id: int):
+    task = [v for v in tasks if v['id'] == id]
+    if len(task) == 0:
+        abort(404)
+    tasks.remove(task[0])
+    return jsonify({'result': True})
+
+
 if __name__ == '__main__':
     app.run(debug=True)

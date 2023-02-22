@@ -34,6 +34,12 @@
             - http://www.pythondoc.com/flask-restful/first.html
             - https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
             - https://github.com/miguelgrinberg/REST-tutorial/blob/master/rest-server.py
+    1. web02.py \
+        use flask-restful to create web API
+        Ref:
+            - http://www.pythondoc.com/flask-restful/second.html
+            - https://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful
+            - https://github.com/miguelgrinberg/REST-tutorial/blob/master/rest-server-v2.py
 1. book_converter: Convert a book in website with html format to PDF
 1. `simple_http_server` \
     simple http server.
