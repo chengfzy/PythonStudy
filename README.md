@@ -51,6 +51,7 @@
 
 
 ### others
+1. compress_code: script to compress code with same structure
 1. stock: to monitor the stock price in terminal
 1. stock_cost_calculate: calculate the cost and profile of stock
 
