@@ -1,5 +1,5 @@
 """
-Backup Code
+Compress and Backup Code
 """
 
 from pathlib import Path
@@ -14,22 +14,29 @@ class Compressor:
         self.code_folder: Path = code_folder.absolute()
         self.save_folder: Path = save_folder.absolute()
 
-        self.log_path: Path = self.save_folder / 'CompressCode.log'
-        # folder to back up build/data folders which don't need to compress
+        # folder to backup build/data folders which don't need to compress
         self.bak_folder: Path = self.code_folder / 'bak'
+        self.process_log_path: Path = self.save_folder / 'CompressProcess.log'
+        self.process_log_file = None  # compress process log file
 
         self.n = 0
 
     def run(self) -> None:
+        # config logging
+        log_path = self.save_folder / f"CompressCode.{datetime.datetime.now().strftime('%Y%m%d%H%M%S.%f')}.log"
+        log_path.parent.mkdir(exist_ok=True, parents=True)
+        # log_file
+        logging.basicConfig(level=logging.INFO,
+                            format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
+                            handlers=[logging.StreamHandler(), logging.FileHandler(log_path)])
         logging.info(f'code folder: {self.code_folder}')
-
-        # create save folder
         logging.info(f'root save folder: {self.save_folder}\n')
-        # create log file
-        logging.info(f'create log file: {self.log_path}')
-        self.log_path.parent.mkdir(exist_ok=True, parents=True)
+        logging.info(f'whole log file: {log_path}')
+        logging.info(f'inner compress process log file: {self.process_log_path}')
         self.bak_folder.mkdir(exist_ok=True, parents=True)
-        self.log_file = open(self.log_path, 'w')
+        # create log file
+        self.process_log_path.parent.mkdir(exist_ok=True, parents=True)
+        self.process_log_file = open(self.process_log_path, 'w')
 
         for p in sorted(self.code_folder.iterdir()):
             if p.is_file():
@@ -41,7 +48,9 @@ class Compressor:
         self.bak_folder.rmdir()
 
     def __process(self, folder: Path) -> bool:
-        if self.__has_code(folder):
+        if self.__is_code(folder):
+            self.__compress_folder(folder)
+        elif self.__has_code(folder):
             for p in sorted(folder.iterdir()):
                 if p.is_file():
                     self.__backup_file(p)
@@ -92,19 +101,20 @@ class Compressor:
 
         # git pull and gc
         if self.__is_code(folder):
-            process = subprocess.run(f'cd {folder}', shell=True, stdout=self.log_file, stderr=self.log_file)
-            process.returncode
             # git pull
-            process = subprocess.run('git pull --all', shell=True, stdout=self.log_file, stderr=self.log_file)
+            process = subprocess.run(f'cd {folder} && git pull --all',
+                                     shell=True,
+                                     stdout=self.process_log_file,
+                                     stderr=self.process_log_file)
             if process.returncode != 0:
                 logging.error(f'git pull fail, {process.returncode}')
             else:
                 logging.info(f'git pull')
             # gc
-            process = subprocess.run('git gc --prune=now --aggressive',
+            process = subprocess.run(f'cd {folder} && git gc --prune=now --aggressive',
                                      shell=True,
-                                     stdout=self.log_file,
-                                     stderr=self.log_file)
+                                     stdout=self.process_log_file,
+                                     stderr=self.process_log_file)
             if process.returncode != 0:
                 logging.error(f'git gc fail, {process.returncode}')
             else:
@@ -114,7 +124,7 @@ class Compressor:
         cmd = f'cd {folder} && 7z a -t7z -r {save_file} {folder}'
         # cmd = f'cd {folder.parent} && zip -Dr save_file ./{folder}'
         logging.info(f'compress command: {cmd}')
-        process = subprocess.run(cmd, shell=True, stdout=self.log_file, stderr=self.log_file)
+        process = subprocess.run(cmd, shell=True, stdout=self.process_log_file, stderr=self.process_log_file)
         # restore backup folder
         for p in self.bak_folder.iterdir():
             if p.is_dir():
@@ -148,7 +158,7 @@ class Compressor:
 
 if __name__ == '__main__':
     # argument parser
-    parser = argparse.ArgumentParser(description='Backup Code')
+    parser = argparse.ArgumentParser(description='Compress Backup Code')
     parser.add_argument('code_folder', help='code folder')
     parser.add_argument('--save-folder', default='./data/CompressedCode', help='folder to save compressed code files')
     args = parser.parse_args()
@@ -160,8 +170,7 @@ if __name__ == '__main__':
         format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
         handlers=[
             logging.StreamHandler(),
-            logging.FileHandler(
-                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log")
+            logging.FileHandler(f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d%H%M%S.%f')}.log")
         ])
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
