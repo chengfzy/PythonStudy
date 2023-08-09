@@ -29,6 +29,8 @@ class Compressor:
         logging.basicConfig(level=logging.INFO,
                             format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
                             handlers=[logging.StreamHandler(), logging.FileHandler(log_path)])
+        coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
+
         logging.info(f'code folder: {self.code_folder}')
         logging.info(f'root save folder: {self.save_folder}\n')
         logging.info(f'whole log file: {log_path}')
@@ -163,16 +165,6 @@ if __name__ == '__main__':
     parser.add_argument('--save-folder', default='./data/CompressedCode', help='folder to save compressed code files')
     args = parser.parse_args()
     print(args)
-
-    # config logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
-        handlers=[
-            logging.StreamHandler(),
-            logging.FileHandler(f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d%H%M%S.%f')}.log")
-        ])
-    coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
     compressor = Compressor(Path(args.code_folder), Path(args.save_folder))
     compressor.run()
