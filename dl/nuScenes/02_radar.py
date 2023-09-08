@@ -18,7 +18,6 @@ from nuscenes.utils.data_classes import RadarPointCloud
 
 
 class NuSceneAnalysis:
-
     def __init__(self, dataroot: Path, version='v1.0-mini') -> None:
         logging.info(f'data root: {dataroot}')
         logging.info(f'version: {version}')
@@ -122,32 +121,33 @@ class NuSceneAnalysis:
             sample_token = my_sample['next']
         cv.waitKey()
 
-    def render_point_cloud_in_image(self,
-                                    sample_token,
-                                    camera_channel='CAM_FRONT',
-                                    point_channel='RADAR_FRONT') -> None:
-        self.nusc.render_pointcloud_in_image(sample_token,
-                                             pointsensor_channel=point_channel,
-                                             camera_channel=camera_channel,
-                                             verbose=False)
+    def render_point_cloud_in_image(
+        self, sample_token, camera_channel='CAM_FRONT', point_channel='RADAR_FRONT'
+    ) -> None:
+        self.nusc.render_pointcloud_in_image(
+            sample_token, pointsensor_channel=point_channel, camera_channel=camera_channel, verbose=False
+        )
 
     def render_sample_data_default(self, sample_data_token: str):
-        self.nusc.render_sample_data(sample_data_token,
-                                     with_anns=True,
-                                     nsweeps=1,
-                                     show_lidarseg=True,
-                                     show_lidarseg_legend=True,
-                                     underlay_map=True,
-                                     use_flat_vehicle_coordinates=True,
-                                     verbose=False)
+        self.nusc.render_sample_data(
+            sample_data_token,
+            with_anns=True,
+            nsweeps=1,
+            show_lidarseg=True,
+            show_lidarseg_legend=True,
+            underlay_map=True,
+            use_flat_vehicle_coordinates=True,
+            verbose=False,
+        )
 
     def render_radar_sample(self, fig=None, ax=None, sample_data_token: str = None):
         # read radar data
         radar_sample_data = self.nusc.get('sample_data', sample_data_token)
         file_path = Path(self.nusc.dataroot) / radar_sample_data['filename']
         logging.info(f'read RADAR: {file_path}')
-        radar_data = RadarPointCloud.from_file(str(file_path), RadarPointCloud.invalid_states,
-                                               RadarPointCloud.dynprop_states, RadarPointCloud.ambig_states)
+        radar_data = RadarPointCloud.from_file(
+            str(file_path), RadarPointCloud.invalid_states, RadarPointCloud.dynprop_states, RadarPointCloud.ambig_states
+        )
 
         # obtain data
         # logging.info(f'radar point shape = {radar_data.points.shape}')
@@ -188,11 +188,9 @@ class NuSceneAnalysis:
         for n in range(num):
             p = pos[n, :]
             rms = pos_rms[n, :]
-            ellipse = Ellipse((p[0], p[1]),
-                              rms[0] * scale,
-                              rms[1] * scale,
-                              facecolor=(0, 1, 0, 0.8),
-                              edgecolor=(0, 0, 0, 0.5))
+            ellipse = Ellipse(
+                (p[0], p[1]), rms[0] * scale, rms[1] * scale, facecolor=(0, 1, 0, 0.8), edgecolor=(0, 0, 0, 0.5)
+            )
             ax.add_patch(ellipse)
 
     def __plot_vel_arrow(self, ax, pos: np.ndarray, vel: np.ndarray, scale=1.0):

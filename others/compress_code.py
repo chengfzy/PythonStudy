@@ -9,7 +9,6 @@ from typing import List
 
 
 class Compressor:
-
     def __init__(self, code_folder: Path = None, save_folder: Path = None) -> None:
         self.code_folder: Path = code_folder.absolute()
         self.save_folder: Path = save_folder.absolute()
@@ -26,9 +25,11 @@ class Compressor:
         log_path = self.save_folder / f"CompressCode.{datetime.datetime.now().strftime('%Y%m%d%H%M%S.%f')}.log"
         log_path.parent.mkdir(exist_ok=True, parents=True)
         # log_file
-        logging.basicConfig(level=logging.INFO,
-                            format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
-                            handlers=[logging.StreamHandler(), logging.FileHandler(log_path)])
+        logging.basicConfig(
+            level=logging.INFO,
+            format="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s",
+            handlers=[logging.StreamHandler(), logging.FileHandler(log_path)],
+        )
         coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
         logging.info(f'code folder: {self.code_folder}')
@@ -104,19 +105,20 @@ class Compressor:
         # git pull and gc
         if self.__is_code(folder):
             # git pull
-            process = subprocess.run(f'cd {folder} && git pull --all',
-                                     shell=True,
-                                     stdout=self.process_log_file,
-                                     stderr=self.process_log_file)
+            process = subprocess.run(
+                f'cd {folder} && git pull --all', shell=True, stdout=self.process_log_file, stderr=self.process_log_file
+            )
             if process.returncode != 0:
                 logging.error(f'git pull fail, {process.returncode}')
             else:
                 logging.info(f'git pull')
             # gc
-            process = subprocess.run(f'cd {folder} && git gc --prune=now --aggressive',
-                                     shell=True,
-                                     stdout=self.process_log_file,
-                                     stderr=self.process_log_file)
+            process = subprocess.run(
+                f'cd {folder} && git gc --prune=now --aggressive',
+                shell=True,
+                stdout=self.process_log_file,
+                stderr=self.process_log_file,
+            )
             if process.returncode != 0:
                 logging.error(f'git gc fail, {process.returncode}')
             else:

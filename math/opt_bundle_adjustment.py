@@ -35,8 +35,16 @@ class BundleAdjustment:
 
         A = self.bundle_adjustment_sparsity(self.n_cameras, self.n_points, self.camera_indices, self.point_indices)
         t0 = time.time()
-        res = least_squares(self.cost_fun, x0, jac_sparsity=A, verbose=2, x_scale='jac', ftol=1e-4, method='trf', args=(
-            self.n_cameras, self.n_points, self.camera_indices, self.point_indices, self.points_2d))
+        res = least_squares(
+            self.cost_fun,
+            x0,
+            jac_sparsity=A,
+            verbose=2,
+            x_scale='jac',
+            ftol=1e-4,
+            method='trf',
+            args=(self.n_cameras, self.n_points, self.camera_indices, self.point_indices, self.points_2d),
+        )
         t1 = time.time()
         print(f'Optimization took {t1 - t0: .3f} seconds')
 
@@ -65,8 +73,8 @@ class BundleAdjustment:
         f = camera_params[:, 6]
         k1 = camera_params[:, 7]
         k2 = camera_params[:, 8]
-        n = np.sum(points_proj ** 2, axis=1)
-        r = 1 + k1 * n + k2 * n ** 2
+        n = np.sum(points_proj**2, axis=1)
+        r = 1 + k1 * n + k2 * n**2
         points_proj *= (r * f)[:, np.newaxis]
         return points_proj
 
@@ -75,8 +83,8 @@ class BundleAdjustment:
         Compute residuals.
         `params` contains camera parameters and 3D coordinates
         """
-        camera_params = params[:n_cameras * 9].reshape((n_cameras, 9))
-        points_3d = params[n_cameras * 9:].reshape((n_points, 3))
+        camera_params = params[: n_cameras * 9].reshape((n_cameras, 9))
+        points_3d = params[n_cameras * 9 :].reshape((n_points, 3))
         points_proj = self.project(points_3d[point_indices], camera_params[camera_indices])
         return (points_proj - point_2d).ravel()
 

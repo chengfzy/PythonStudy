@@ -10,7 +10,7 @@ import typing
 
 
 class TestQuaternion(unittest.TestCase):
-    """ Unit test for Quaternion """
+    """Unit test for Quaternion"""
 
     def setUp(self) -> typing.NoReturn:
         self.q = Quaternion(random.random(), np.random.rand(3))
@@ -36,7 +36,7 @@ class TestQuaternion(unittest.TestCase):
 
 
 class TestSO3(unittest.TestCase):
-    """ Unit test for SO3 """
+    """Unit test for SO3"""
 
     def setUp(self) -> typing.NoReturn:
         self.v = np.random.rand(3)
@@ -46,10 +46,14 @@ class TestSO3(unittest.TestCase):
         np.testing.assert_almost_equal(self.v, self.r.log())
 
         # certain case with precise result
-        v1 = np.array([1., 2., 3.])
-        r1 = np.array([[-0.694920557641312, 0.713520990527788, 0.089292858861912],
-                       [-0.192006972791999, -0.303785044339471, 0.933192353823647],
-                       [0.692978167741770, 0.631349699383718, 0.348107477830265]])
+        v1 = np.array([1.0, 2.0, 3.0])
+        r1 = np.array(
+            [
+                [-0.694920557641312, 0.713520990527788, 0.089292858861912],
+                [-0.192006972791999, -0.303785044339471, 0.933192353823647],
+                [0.692978167741770, 0.631349699383718, 0.348107477830265],
+            ]
+        )
         np.testing.assert_almost_equal(SO3.exp(v1).mat(), r1)
 
         # zero angle
@@ -104,7 +108,7 @@ class TestSO3(unittest.TestCase):
 
 
 class TestSE3(unittest.TestCase):
-    """ Unit test for SE3 """
+    """Unit test for SE3"""
 
     def setUp(self) -> typing.NoReturn:
         self.v = np.random.rand(6)  # [t, phi]
@@ -114,11 +118,15 @@ class TestSE3(unittest.TestCase):
         np.testing.assert_almost_equal(self.v, self.t.log())
 
         # certain case with precise result
-        v1 = np.array([1., 2., 3., 4., 5., 6.])
-        t1 = np.array([[-0.422960948855941, 0.052841708771364, 0.904605875261157, 1.686650850304059],
-                       [0.880247438019417, -0.213015890828015, 0.424014950343734, 1.932585941427824],
-                       [0.215101100887779, 0.975618769842437, 0.043583624539450, 2.598411148607441],
-                       [0.000000000000000, 0.000000000000000, 0.000000000000000, 1.000000000000000]])
+        v1 = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        t1 = np.array(
+            [
+                [-0.422960948855941, 0.052841708771364, 0.904605875261157, 1.686650850304059],
+                [0.880247438019417, -0.213015890828015, 0.424014950343734, 1.932585941427824],
+                [0.215101100887779, 0.975618769842437, 0.043583624539450, 2.598411148607441],
+                [0.000000000000000, 0.000000000000000, 0.000000000000000, 1.000000000000000],
+            ]
+        )
         np.testing.assert_almost_equal(SE3.exp(v1).mat(), t1)
 
         # zero angle and zero translation
@@ -127,8 +135,14 @@ class TestSE3(unittest.TestCase):
         np.testing.assert_equal(SE3.exp(v2).mat(), t2)
 
     def test_hat_vee(self) -> typing.NoReturn:
-        mat = np.array([[0, -self.v[5], self.v[4], self.v[0]], [self.v[5], 0, -self.v[3], self.v[1]],
-                        [-self.v[4], self.v[3], 0, self.v[2]], [0, 0, 0, 0]])
+        mat = np.array(
+            [
+                [0, -self.v[5], self.v[4], self.v[0]],
+                [self.v[5], 0, -self.v[3], self.v[1]],
+                [-self.v[4], self.v[3], 0, self.v[2]],
+                [0, 0, 0, 0],
+            ]
+        )
         np.testing.assert_almost_equal(SE3.hat(self.v), mat)
         np.testing.assert_almost_equal(SE3.vee(mat), self.v)
 

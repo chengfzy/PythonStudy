@@ -22,7 +22,7 @@ class Converter:
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
             'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6,ja;q=0.5',
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36',
-            'Accept-Encoding': 'gzip, deflate, br'
+            'Accept-Encoding': 'gzip, deflate, br',
         }
         self.folder = save_folder
 
@@ -73,7 +73,7 @@ class Converter:
         response = requests.get(url, headers=self.headers)
         content = response.content.decode('utf-8')
         pattern = "<A HREF=\"(.*?)\""
-        domain = url[:url.rfind('/') + 1]
+        domain = url[: url.rfind('/') + 1]
         sections = []
         for m in re.compile(pattern).findall(content):
             if m.endswith("html"):
@@ -87,7 +87,7 @@ class Converter:
         :param folder: Save folder for the section page, should be the actual subfolder which will contain the html file
         :return: Saved html file (full) path
         """
-        page_file = os.path.join(folder, url[url.rfind('/') + 1:])
+        page_file = os.path.join(folder, url[url.rfind('/') + 1 :])
         print(f'\tadd section page: {page_file}')
         if not os.path.exists(page_file):
             response = requests.get(url, headers=self.headers)
@@ -102,7 +102,7 @@ class Converter:
         Save page images to folder
         """
         pattern = "<IMG SRC=\"(.*?)\""
-        domain = url[:url.rfind('/') + 1]
+        domain = url[: url.rfind('/') + 1]
         image_urls = re.compile(pattern).findall(content)
         for m in image_urls:
             if not m.startswith("http"):
@@ -128,13 +128,8 @@ class Converter:
             'header-center': '[section]',
             'footer-center': '[page]/[topage]',
             'encoding': "UTF-8",
-            'custom-header': [
-                ('Accept-Encoding', 'gzip')
-            ],
-            'cookie': [
-                ('cookie-name1', 'cookie-value1'),
-                ('cookie-name2', 'cookie-value2'),
-            ]
+            'custom-header': [('Accept-Encoding', 'gzip')],
+            'cookie': [('cookie-name1', 'cookie-value1'), ('cookie-name2', 'cookie-value2')],
         }
         pdfkit.from_file(htmls, os.path.join(self.folder, file_name), options=options)
 

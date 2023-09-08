@@ -43,10 +43,16 @@ def basic(knots: np.ndarray, degree: int, u: float, index: int):
     if knots[index] > u or u >= knots[index + degree + 1]:
         return 0
 
-    c1 = (u - knots[index]) / (knots[index + degree] - knots[index]) if knots[index] <= u < knots[index +
-                                                                                                  degree] else 0.0
-    c2 = (knots[index + degree + 1] - u) / (
-        knots[index + degree + 1] - knots[index + 1]) if knots[index + 1] <= u < knots[index + degree + 1] else 0.0
+    c1 = (
+        (u - knots[index]) / (knots[index + degree] - knots[index])
+        if knots[index] <= u < knots[index + degree]
+        else 0.0
+    )
+    c2 = (
+        (knots[index + degree + 1] - u) / (knots[index + degree + 1] - knots[index + 1])
+        if knots[index + 1] <= u < knots[index + degree + 1]
+        else 0.0
+    )
     return c1 * basic(knots, degree - 1, u, index) + c2 * basic(knots, degree - 1, u, index + 1)
 
 
@@ -60,7 +66,7 @@ def bspline(knots: np.ndarray, ctrl_points: np.ndarray, degree: int, u: float):
         degree (int): Degree p
         u (float): Evaluate input u
     Returns:
-        np.ndarray: 
+        np.ndarray:
     """
     s = np.zeros(ctrl_points.shape[0])
     for m in range(ctrl_points.shape[0]):

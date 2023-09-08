@@ -16,6 +16,7 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     from watchlist.models import User
+
     user = User.query.get(int(user_id))
     return user
 
@@ -23,6 +24,7 @@ def load_user(user_id):
 @app.context_processor
 def inject_user():
     from watchlist.models import User
+
     user = User.query.first()
     return dict(user=user)
 

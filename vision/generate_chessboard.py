@@ -29,14 +29,26 @@ def generate_chessboard(c, nx, ny, szx, szy):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate chessboard and save into .PDF file')
     parser.add_argument('--file', type=str, default='../data/chessboard', dest='file', help='output file name')
-    parser.add_argument('--nx', type=int, default=6, dest='nx',
-                        help='the number of tags in x direction (default: %(default)s)')
-    parser.add_argument('--ny', type=int, default=6, dest='ny',
-                        help='the number of tags in y direction (default: %(default)s)')
-    parser.add_argument('--szx', type=float, default=0.05, dest='szx',
-                        help='the size of one chessboard square in x direction [m] (default: %(default)s)')
-    parser.add_argument('--szy', type=float, default=0.05, dest='szy',
-                        help='the size of one chessboard square in y direction [m] (default: %(default)s)')
+    parser.add_argument(
+        '--nx', type=int, default=6, dest='nx', help='the number of tags in x direction (default: %(default)s)'
+    )
+    parser.add_argument(
+        '--ny', type=int, default=6, dest='ny', help='the number of tags in y direction (default: %(default)s)'
+    )
+    parser.add_argument(
+        '--szx',
+        type=float,
+        default=0.05,
+        dest='szx',
+        help='the size of one chessboard square in x direction [m] (default: %(default)s)',
+    )
+    parser.add_argument(
+        '--szy',
+        type=float,
+        default=0.05,
+        dest='szy',
+        help='the size of one chessboard square in y direction [m] (default: %(default)s)',
+    )
     args = parser.parse_args()
 
     # create canvas

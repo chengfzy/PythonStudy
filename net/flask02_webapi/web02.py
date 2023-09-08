@@ -4,34 +4,30 @@ from flask_restful import Api, Resource, reqparse, fields, marshal
 app = Flask(__name__)
 api = Api(app)
 
-tasks = [{
-    'id': 1,
-    'title': u'Buy groceries',
-    'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-    'done': False
-}, {
-    'id': 2,
-    'title': u'Learn Python',
-    'description': u'Need to find a good Python tutorial on the web',
-    'done': False
-}]
+tasks = [
+    {'id': 1, 'title': u'Buy groceries', 'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 'done': False},
+    {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web',
+        'done': False,
+    },
+]
 
 task_fields = {
     'title': fields.String,
     'description': fields.String,
     'done': fields.Boolean,
-    'uri': fields.Url('task', absolute=True)
+    'uri': fields.Url('task', absolute=True),
 }
 
 
 class HelloWorld(Resource):
-
     def get(self):
         return {'msg': 'Hello World!'}
 
 
 class TaskListApi(Resource):
-
     def __init__(self) -> None:
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('title', type=str, required=True, help='no task title provided', location='json')
@@ -47,14 +43,13 @@ class TaskListApi(Resource):
             'id': tasks[-1]['id'] + 1 if len(tasks) > 0 else 1,
             'title': args['title'],
             'description': args['description'],
-            'done': False
+            'done': False,
         }
         tasks.append(task)
         return {'task': marshal(task, task_fields)}, 201
 
 
 class TaskApi(Resource):
-
     def __init__(self) -> None:
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('title', type=str, location='json')

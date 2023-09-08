@@ -3,7 +3,8 @@ from colorama import Fore, Back, Style
 
 
 class HeadingType(enum.Enum):
-    """ Heading type """
+    """Heading type"""
+
     Title = 1
     Section = 2
     SubSection = 3
@@ -30,7 +31,7 @@ class Heading:
 
 
 class Title(Heading):
-    """ Title heading """
+    """Title heading"""
 
     def __init__(self, text: str = "", break_line: bool = True):
         """
@@ -53,7 +54,7 @@ class Title(Heading):
 
 
 class Section(Heading):
-    """ Section heading """
+    """Section heading"""
 
     def __init__(self, text: str = "", break_line: bool = True):
         """
@@ -74,7 +75,7 @@ class Section(Heading):
 
 
 class SubSection(Heading):
-    """ SubSection heading """
+    """SubSection heading"""
 
     def __init__(self, text: str = "", break_line: bool = True):
         """
@@ -95,7 +96,7 @@ class SubSection(Heading):
 
 
 class Paragraph(Heading):
-    """ Paragraph heading """
+    """Paragraph heading"""
 
     def __init__(self, text: str = "", break_line: bool = False):
         """

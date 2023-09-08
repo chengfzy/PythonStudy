@@ -21,10 +21,10 @@ def convert_pos(size, box):
     Returns:
         set: the position of YOLO format, (centerX, centerY, width, height), the size is in range [0, 1]
     """
-    dw = 1. / size[0]
-    dh = 1. / size[1]
-    x = (box[0] + box[2] / 2.) * dw
-    y = (box[1] + box[3] / 2.) * dh
+    dw = 1.0 / size[0]
+    dh = 1.0 / size[1]
+    x = (box[0] + box[2] / 2.0) * dw
+    y = (box[1] + box[3] / 2.0) * dh
     w = box[2] * dw
     h = box[3] * dh
     return (x, y, w, h)

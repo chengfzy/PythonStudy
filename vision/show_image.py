@@ -32,8 +32,16 @@ def show(folder: Path, max_size: int = 1080, wait_time: int = 30):
             image = cv.resize(image, (-1, -1), fx=ratio, fy=ratio)
 
         # draw index and file name
-        cv.putText(image, f'[{i}/{len(files)}] {files[i].name}', (20, 20), cv.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 1,
-                   cv.LINE_AA)
+        cv.putText(
+            image,
+            f'[{i}/{len(files)}] {files[i].name}',
+            (20, 20),
+            cv.FONT_HERSHEY_COMPLEX,
+            0.5,
+            (0, 0, 255),
+            1,
+            cv.LINE_AA,
+        )
 
         # show image
         cv.imshow('Image', image)
@@ -70,8 +78,7 @@ def show(folder: Path, max_size: int = 1080, wait_time: int = 30):
 
 if __name__ == '__main__':
     # argument parser
-    help_str = \
-    '''
+    help_str = '''
 Show Images in Folder. Key command:
     W/w:        Show faster
     S/s:        Show slower

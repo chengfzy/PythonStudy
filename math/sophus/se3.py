@@ -29,7 +29,7 @@ class SE3:
         return f'SE3: [{repr(self.__so3)}, t: {repr(self.__t)}]'
 
     def __str__(self):
-        phi = self.__so3.log() * 180. / np.pi
+        phi = self.__so3.log() * 180.0 / np.pi
         return f'phi: [{phi[0]: .5f}, {phi[1]: .5f}, {phi[2]: .5f}] deg, t: [{self.__t[0]: .5f}, {self.__t[1]: .5f}, {self.__t[2]: .5f}] m'
 
     def __getitem__(self, key):
@@ -64,7 +64,7 @@ class SE3:
             raise TypeError(f'unsupported type {type(right)}')
 
     def __eq__(self, other):
-        """ Check SE3 is equal to other """
+        """Check SE3 is equal to other"""
         if isinstance(other, SE3):
             return self.__so3 == other.so3 and (self.__t == other.t).all()
         return False
@@ -153,8 +153,11 @@ class SE3:
         if theta < np.finfo(float).eps:
             v = so3.mat()
         else:
-            v = np.identity(3) + (1 - np.cos(theta)) / theta**2 * phi_hat + (theta -
-                                                                             np.sin(theta)) / theta**3 * phi_hat2
+            v = (
+                np.identity(3)
+                + (1 - np.cos(theta)) / theta**2 * phi_hat
+                + (theta - np.sin(theta)) / theta**3 * phi_hat2
+            )
 
         return SE3(so3, v.dot(t))
 
@@ -170,11 +173,14 @@ class SE3:
         phi_hat = SO3.hat(phi)
 
         if np.abs(theta) < np.finfo(float).eps:
-            v_inv = np.identity(3) - 0.5 * phi_hat + 1. / 12. * phi_hat.dot(phi_hat)
+            v_inv = np.identity(3) - 0.5 * phi_hat + 1.0 / 12.0 * phi_hat.dot(phi_hat)
         else:
             half_theta = 0.5 * theta
-            v_inv = np.identity(3) - 0.5 * phi_hat + (1. - theta * np.cos(half_theta) /
-                                                      (2. * np.sin(half_theta))) / theta**2 * phi_hat.dot(phi_hat)
+            v_inv = (
+                np.identity(3)
+                - 0.5 * phi_hat
+                + (1.0 - theta * np.cos(half_theta) / (2.0 * np.sin(half_theta))) / theta**2 * phi_hat.dot(phi_hat)
+            )
 
         return np.hstack((v_inv.dot(self.__t), phi))
 

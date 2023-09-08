@@ -166,10 +166,9 @@ def data_visualization(nusc: NuScenes):
     print(util.Section('Render'))
     my_sample = nusc.sample[10]
     nusc.render_pointcloud_in_image(my_sample['token'], pointsensor_channel='LIDAR_TOP', verbose=False)
-    nusc.render_pointcloud_in_image(my_sample['token'],
-                                    pointsensor_channel='LIDAR_TOP',
-                                    render_intensity=True,
-                                    verbose=False)
+    nusc.render_pointcloud_in_image(
+        my_sample['token'], pointsensor_channel='LIDAR_TOP', render_intensity=True, verbose=False
+    )
     nusc.render_pointcloud_in_image(my_sample['token'], pointsensor_channel='RADAR_FRONT', verbose=False)
 
     print(util.Section('Plot Sample Data'))
@@ -183,6 +182,7 @@ def data_visualization(nusc: NuScenes):
 
     print(util.Section('Disable RADAR Filter'))
     from nuscenes.utils.data_classes import RadarPointCloud
+
     RadarPointCloud.disable_filters()
     nusc.render_sample_data(my_sample['data']['RADAR_FRONT'], nsweeps=5, underlay_map=True, verbose=False)
     RadarPointCloud.default_filters()

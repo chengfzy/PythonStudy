@@ -17,8 +17,10 @@ if __name__ == '__main__':
         handlers=[
             logging.StreamHandler(),
             logging.FileHandler(
-                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log")
-        ])
+                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log"
+            ),
+        ],
+    )
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
     asyncio.get_event_loop().run_until_complete(websockets.serve(server, 'localhost', 60010))

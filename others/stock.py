@@ -9,7 +9,6 @@ import requests
 
 
 class RealTimeInfo:
-
     def __init__(self, code, raw_str, simple=False):
         self.code = code
         self.simple = simple
@@ -32,11 +31,15 @@ class RealTimeInfo:
     def __str__(self):
         ratio = (self.price - self.pre_price) / self.pre_price
         if self.simple:
-            info = f'{self.datetime.time()} {self.name[:2]:^2s} {self.price:>8.3f}/{100 * ratio:>5.2f}% ' \
-                   + f'{self.high:>8.3f}/{self.low:<8.3f}'
+            info = (
+                f'{self.datetime.time()} {self.name[:2]:^2s} {self.price:>8.3f}/{100 * ratio:>5.2f}% '
+                + f'{self.high:>8.3f}/{self.low:<8.3f}'
+            )
         else:
-            info = f'{self.datetime.time()} [{self.code}] {self.name:^4s} {self.price:>8.3f}/{100 * ratio:>5.2f}% ' \
-                   + f'{self.high:>8.3f}/{self.low:<8.3f}'
+            info = (
+                f'{self.datetime.time()} [{self.code}] {self.name:^4s} {self.price:>8.3f}/{100 * ratio:>5.2f}% '
+                + f'{self.high:>8.3f}/{self.low:<8.3f}'
+            )
         if len(self.buy) > 0:
             info += ' |{0}|'.format(', '.join([f'{p:>6.2f}/{int(c / 100):<5d}' for p, c in self.buy]))
             info += '{0}'.format(', '.join([f'{p:>6.2f}/{int(c / 100):<5d}' for p, c in self.sale]))
@@ -44,7 +47,6 @@ class RealTimeInfo:
 
 
 class Worker(Thread):
-
     def __init__(self, work_queue, result_queue, simple=False):
         Thread.__init__(self)
         self.work_queue = work_queue
@@ -72,7 +74,6 @@ class Worker(Thread):
 
 
 class Stock:
-
     def __init__(self, codes, thread_num, simple=False, proxy=True):
         self.codes = None
         self.proxies = None
@@ -100,10 +101,12 @@ class Stock:
                 thread.join()
 
     def get_value(self, code_index, code):
-        r = requests.get('https://hq.sinajs.cn/list=' + code,
-                         proxies=self.proxies,
-                         headers={'Referer': 'https://finance.sina.com.cn/'})
-        res = r.text[r.text.find('"') + 1:r.text.rfind('"')]
+        r = requests.get(
+            'https://hq.sinajs.cn/list=' + code,
+            proxies=self.proxies,
+            headers={'Referer': 'https://finance.sina.com.cn/'},
+        )
+        res = r.text[r.text.find('"') + 1 : r.text.rfind('"')]
         info = RealTimeInfo(code, res, self.simple)
         return code_index, info
 

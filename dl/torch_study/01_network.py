@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 
 
 class Net(nn.Module):
-
     def __init__(self):
         super(Net, self).__init__()
         # 1 input image channel, 6 output channels, 3x3 square convolution kernel
@@ -70,8 +69,10 @@ if __name__ == "__main__":
     loss = criterion(output, target)
     print(f'loss = {loss}')
     # see the graph of computations
-    print(f'{loss.grad_fn} ==> {loss.grad_fn.next_functions[0][0]}'
-          f' ==> {loss.grad_fn.next_functions[0][0].next_functions[0][0]}')
+    print(
+        f'{loss.grad_fn} ==> {loss.grad_fn.next_functions[0][0]}'
+        f' ==> {loss.grad_fn.next_functions[0][0].next_functions[0][0]}'
+    )
 
     # backprop
     net.zero_grad()

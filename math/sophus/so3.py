@@ -32,7 +32,7 @@ class SO3:
         return f"SO3: {repr(self.__q)}"
 
     def __str__(self):
-        phi = self.log() * 180. / np.pi
+        phi = self.log() * 180.0 / np.pi
         return f'[{phi[0]: .5f}, {phi[1]: .5f}, {phi[2]: .5f}] deg'
 
     def __getitem__(self, key):
@@ -60,7 +60,7 @@ class SO3:
             raise TypeError(f'unsupported type {type(right)}')
 
     def __eq__(self, other):
-        """ Check SO3 is equal to other """
+        """Check SO3 is equal to other"""
         if isinstance(other, SO3):
             return self.__q == other.q
         return False
@@ -135,8 +135,8 @@ class SO3:
         if theta < np.finfo(float).eps:
             theta2 = theta**2
             theta4 = theta2**2
-            real = 1. - 1. / 8. * theta2 + 1. / 384. * theta4
-            img = 0.5 - 1. / 48. * theta2 + 1. / 3840. * theta4
+            real = 1.0 - 1.0 / 8.0 * theta2 + 1.0 / 384.0 * theta4
+            img = 0.5 - 1.0 / 48.0 * theta2 + 1.0 / 3840.0 * theta4
             return SO3(Quaternion(real, img * v))
         else:
             return SO3(Quaternion(np.cos(0.5 * theta), np.sin(0.5 * theta) * v / theta))
@@ -159,15 +159,15 @@ class SO3:
             # if quaternion is normalized and n=0, then w should be 1, w=0 should never happen here
             if abs(w) < np.finfo(float).eps:
                 raise ArithmeticError(f'quaternion {self.__q} should be normalized')
-            v = 2. / w - 2. / 3. * n2 / w**3
+            v = 2.0 / w - 2.0 / 3.0 * n2 / w**3
         else:
             if abs(w) < np.finfo(float).eps:
-                if w > 0.:
+                if w > 0.0:
                     v = np.pi / n
                 else:
                     v = -np.pi / n
             else:
-                v = 2. * np.arctan(n / w) / n
+                v = 2.0 * np.arctan(n / w) / n
 
         return v * self.__q.img
 

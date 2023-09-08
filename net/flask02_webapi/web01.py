@@ -2,17 +2,15 @@ from flask import Flask, jsonify, abort, make_response, request, url_for
 
 app = Flask(__name__)
 
-tasks = [{
-    'id': 1,
-    'title': u'Buy groceries',
-    'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-    'done': False
-}, {
-    'id': 2,
-    'title': u'Learn Python',
-    'description': u'Need to find a good Python tutorial on the web',
-    'done': False
-}]
+tasks = [
+    {'id': 1, 'title': u'Buy groceries', 'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 'done': False},
+    {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web',
+        'done': False,
+    },
+]
 
 
 def make_public_task(task):
@@ -57,7 +55,7 @@ def create_task():
         'id': tasks[-1]['id'] + 1,
         'title': request.json['title'],
         'description': request.json.get('description', ''),
-        'done': False
+        'done': False,
     }
 
     tasks.append(task)

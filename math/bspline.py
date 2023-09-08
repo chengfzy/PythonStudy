@@ -30,7 +30,7 @@ class MyBSpline:
 
         k = self._find_span_linear(u)
         p = self.degree
-        result = self.ctrl_points[k - p: k + 1, :].copy()
+        result = self.ctrl_points[k - p : k + 1, :].copy()
         for r in range(1, p + 1):
             for j in range(p, r - 1, -1):
                 dev = self.knots[j + k - r + 1] - self.knots[j + k - p]
@@ -136,8 +136,17 @@ def my_method(degree, ctrl_points):
 
 
 if __name__ == '__main__':
-    ctrl_points = [[0.0, 0.0], [1.0, 5.0], [2.0, 10.0], [5.0, 12.0], [8.0, 10.0], [14.0, -10.0], [16.0, -12.0],
-                   [18.0, -10.0], [22.0, 0.0]]
+    ctrl_points = [
+        [0.0, 0.0],
+        [1.0, 5.0],
+        [2.0, 10.0],
+        [5.0, 12.0],
+        [8.0, 10.0],
+        [14.0, -10.0],
+        [16.0, -12.0],
+        [18.0, -10.0],
+        [22.0, 0.0],
+    ]
     degree = 3
     print(f'control points = {ctrl_points}')
     print(f'degree = {degree}')

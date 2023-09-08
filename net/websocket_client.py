@@ -12,17 +12,14 @@ async def client(url):
 
 
 class Client:
-
     def __init__(self, url: str) -> None:
         self.__url = url
         self.__ws: websocket.WebSocketApp = None
 
     def start(self):
-        self.__ws = websocket.WebSocketApp(self.__url,
-                                           on_open=self.on_open,
-                                           on_message=self.on_message,
-                                           on_ping=self.on_ping,
-                                           on_close=self.on_close)
+        self.__ws = websocket.WebSocketApp(
+            self.__url, on_open=self.on_open, on_message=self.on_message, on_ping=self.on_ping, on_close=self.on_close
+        )
         self.__ws.run_forever()
 
     def on_open(self, ws):
@@ -47,8 +44,10 @@ if __name__ == '__main__':
         handlers=[
             logging.StreamHandler(),
             logging.FileHandler(
-                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log")
-        ])
+                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log"
+            ),
+        ],
+    )
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
     url = 'ws://localhost:60000/test'

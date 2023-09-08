@@ -13,9 +13,9 @@ parser.add_argument('--sale_price', type=float, default=None, help='卖出股价
 args = parser.parse_args()
 print(args)
 
-c1 = 2.5 / 10000.  # 佣金，手续费 2.5/10000, 0.18%
-c2 = 0.1 / 100.  # 印花税
-c3 = 0.2 / 10000.  # 过户费
+c1 = 2.5 / 10000.0  # 佣金，手续费 2.5/10000, 0.18%
+c2 = 0.1 / 100.0  # 印花税
+c3 = 0.2 / 10000.0  # 过户费
 
 num = args.num  # 数量
 

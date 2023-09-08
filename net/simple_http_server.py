@@ -8,7 +8,6 @@ import json
 
 
 class SimpleHttpRequestHandler(BaseHTTPRequestHandler):
-
     def do_GET(self):
         logging.warning('GET')
         logging.info('Client Values:')
@@ -66,8 +65,10 @@ if __name__ == '__main__':
         handlers=[
             logging.StreamHandler(),
             logging.FileHandler(
-                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log")
-        ])
+                f"/tmp/{Path(__file__).stem}.{datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')}.log"
+            ),
+        ],
+    )
     coloredlogs.install(fmt="[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s")
 
     server = HTTPServer(('localhost', 8080), SimpleHttpRequestHandler)

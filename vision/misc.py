@@ -18,7 +18,7 @@ def toGray(img: np.ndarray, cloned=True):
 
     Args:
         img (np.ndarray): Input color image
-        cloned (bool, optional): Whether to output an cloned image if the image type is CV_8UC1, cloned image will not 
+        cloned (bool, optional): Whether to output an cloned image if the image type is CV_8UC1, cloned image will not
             destory the input memory. Defaults to True.
 
     Returns:
@@ -49,7 +49,7 @@ def toColor(img: np.ndarray, cloned=True):
 
     Args:
         img (np.ndarray): Input gray image
-        cloned (bool, optional): Whether to output an cloned image if the image type is CV_8UC3, cloned image will not 
+        cloned (bool, optional): Whether to output an cloned image if the image type is CV_8UC3, cloned image will not
             destory the input memory. Defaults to True.
 
     Returns:
