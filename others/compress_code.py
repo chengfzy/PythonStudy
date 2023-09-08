@@ -93,7 +93,7 @@ class Compressor:
         # don't compress build/data folder
         for p in folder.iterdir():
             # if p.is_dir() and (str(p.name).startswith('build') or (str(p.name).startswith('data'))):
-            if p.is_dir() and str(p.name).lower().startswith('build') and 'web' not in str(p).lower():
+            if self.__is_build_folder(p):
                 new_folder = self.bak_folder / p.name
                 os.rename(p, new_folder)
                 logging.info(f'backup: {p} => {new_folder}')
@@ -158,6 +158,25 @@ class Compressor:
             logging.info(f'create save folder: {save_folder}')
             save_folder.mkdir(exist_ok=True, parents=True)
         return save_folder
+
+    def __is_build_folder(self, p: Path) -> bool:
+        """Check current folder is build folder in C++"""
+        folder_name = str(p.name).lower()
+        if (
+            p.is_dir()
+            and ('web' not in str(p).lower())
+            and (
+                folder_name == 'build'
+                or folder_name == 'buildDebug'
+                or folder_name == "buildRelease"
+                or folder_name == 'build01'
+                or folder_name == 'build02'
+                or folder_name == 'build.bak'
+            )
+        ):
+            return True
+        else:
+            return False
 
 
 if __name__ == '__main__':
