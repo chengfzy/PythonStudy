@@ -92,7 +92,7 @@ class Compressor:
         # don't compress build/data folder
         for p in folder.iterdir():
             # if p.is_dir() and (str(p.name).startswith('build') or (str(p.name).startswith('data'))):
-            if p.is_dir() and str(p.name).startswith('build'):
+            if p.is_dir() and str(p.name).lower().startswith('build') and 'web' not in str(p).lower():
                 new_folder = self.bak_folder / p.name
                 os.rename(p, new_folder)
                 logging.info(f'backup: {p} => {new_folder}')
