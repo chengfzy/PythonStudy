@@ -109,6 +109,9 @@ venv.bak/
 # vscode
 .vscode/
 
+# temp
+temp/
+
 # data
 data/
 .history/
