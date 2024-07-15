@@ -79,6 +79,8 @@
     Ref:
     1. [NURBS-Python Visualization](https://nurbs-python.readthedocs.io/en/latest/visualization.html).
     1. [NURBS-Python Example](https://github.com/orbingol/NURBS-Python_Examples/blob/master/visualization/mpl_curve2d_tangents.py).
+1. `catmull_rom_spline`
+    Catmull-Rom曲线的基本使用, 参考`Online Monocular Lane Mapping Using Catmull-Rom Spline`论文和相关笔记
 
 #### sophus
 python version using Sophus
