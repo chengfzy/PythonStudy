@@ -1,10 +1,20 @@
 """
 Some Example about Catmull-Rom Spline
 
+Note:
+- Basic, Simple, Simplest几个的推导都可以参考[1], MonoLaneMapping对应alpha参考[4]
+- Basic是基础的版本, 没有考虑参数tao, 只有alpha, 没有找到添加tao时对应的参考文献, [1]中没有写
+- 注意Basic, Simple, Simplest和MonoLaneMapping的tao表达含义不一样, 代码中分开进行了表达
+- 当alpha=0, tao=0, tao_mono_lane_mapping=0.5, 几个计算结果是完全一样的
+- Simple/Simplest有考虑参考tao和alpha, 但与MonoLaneMapping中的tao对应不上, 意义不太一样
+MonoLaneMapping对应alpha=0的情况, 没有参数考虑其他情况
+-  
+
 Ref:
 [1] https://qroph.github.io/2018/07/30/smooth-paths-using-catmull-rom-splines.html
 [2] https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline
 [3] https://github.com/qroph/qroph.github.io/blob/master/assets/interactive/catmullrom.js
+[4] Qiao et al., “Online Monocular Lane Mapping Using Catmull-Rom Spline.”
 """
 
 from enum import Enum, auto
@@ -16,11 +26,13 @@ class CalculateMethod(Enum):
     Basic = auto()  # the basic method
     Simple = auto()  # the simple method
     Simplest = auto()  # the simplest method
+    MonoLaneMapping = auto()  # paper from MonoLaneMapping, Ref [4]
 
 
 class CatmullRomSpline:
-    def __init__(self, tao=0.5, alpha=0.5, cal_method=CalculateMethod.Simple):
-        self.tao = tao  # tao
+    def __init__(self, tao=0.5, tao_mono_lane_mapping=0.5, alpha=0.5, cal_method=CalculateMethod.Simple):
+        self.tao = tao  # tao for Simple/Simplest
+        self.tao_mono_lane_mapping = tao_mono_lane_mapping  # tao for MonoLaneMapping
         self.alpha = alpha  # alpha, 0: uniform, 0.5: centripetal, 1: chordal
         self.cal_method = cal_method  # calculate method
 
@@ -49,6 +61,9 @@ class CatmullRomSpline:
                 all_points.extend(
                     self.__compute_single_points_simplest(ctrl_points[n : n + 4, :], num_points=num_points)
                 )
+        elif self.cal_method == CalculateMethod.MonoLaneMapping:
+            for n in range(ctrl_points_num - 3):
+                all_points.extend(self.__compute_mono_lane_mapping(ctrl_points[n : n + 4, :], num_points=num_points))
         return np.array(all_points)
 
     def __compute_single_points_basic(self, ctrl_points: np.ndarray, num_points=20):
@@ -121,6 +136,43 @@ class CatmullRomSpline:
         t = np.linspace(0, 1, num_points).reshape(num_points, 1)
         return a * t**3 + b * t**2 + c * t + d
 
+    def __compute_mono_lane_mapping(self, ctrl_points: np.ndarray, num_points=20):
+        """
+        Compute the points in single spline segment, see Ref[4]
+
+        Args:
+            ctrl_points (np.ndarray): control points, [P0,P1,P2,P3]
+            num_points (int, optional): The number of points to include in the resulting curve segment. Defaults to 20.
+        """
+        # 论文中的操作, uniform形式, 不考虑alpha
+        all_u = np.linspace(0, 1, num_points).reshape(num_points, 1)
+        M = np.array(
+            [
+                [0, 1, 0, 0],
+                [-self.tao_mono_lane_mapping, 0, self.tao_mono_lane_mapping, 0],
+                [
+                    2 * self.tao_mono_lane_mapping,
+                    self.tao_mono_lane_mapping - 3,
+                    3 - 2 * self.tao_mono_lane_mapping,
+                    -self.tao_mono_lane_mapping,
+                ],
+                [
+                    -self.tao_mono_lane_mapping,
+                    2 - self.tao_mono_lane_mapping,
+                    self.tao_mono_lane_mapping - 2,
+                    self.tao_mono_lane_mapping,
+                ],
+            ]
+        )
+
+        points = []
+        for v in all_u:
+            u = v[0]
+            U = np.array([1, u, u**2, u**3])
+            points.append(U.transpose() @ M @ ctrl_points)
+
+        return np.array(points)
+
     def __tj(self, ti: float, pi: np.ndarray, pj: np.ndarray) -> float:
         """calculate tj"""
         return np.linalg.norm(pi - pj) ** self.alpha + ti
@@ -129,16 +181,17 @@ class CatmullRomSpline:
 if __name__ == '__main__':
     # common config
     ctrl_points = np.array([[0, 1.5], [2, 2], [3, 1], [3.8, 0.55], [4, 0.5], [5, 1], [6, 2], [7, 3]])
-    tao = 0
+    tao, tao_mono_lane_mapping = 0, 0.5
     # plot config
     colors = ['b', 'r', 'k', 'm']
 
     # calculate spline with different method
-    methods = [CalculateMethod.Basic, CalculateMethod.Simple, CalculateMethod.Simplest]
+    methods = [CalculateMethod.Basic, CalculateMethod.Simple, CalculateMethod.Simplest, CalculateMethod.MonoLaneMapping]
+    # methods = [CalculateMethod.Basic, CalculateMethod.MonoLaneMapping]
     all_points = []
     for method in methods:
         # calculate catmull-rom spline points
-        spline = CatmullRomSpline(tao=tao, alpha=0.5, cal_method=method)
+        spline = CatmullRomSpline(tao=tao, tao_mono_lane_mapping=tao_mono_lane_mapping, alpha=0, cal_method=method)
         all_points.append(spline.compute_points(ctrl_points))
 
     # plot
