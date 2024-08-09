@@ -3,10 +3,10 @@ Some Example about Catmull-Rom Spline
 
 Note:
 - Basic, Simple, Simplest几个的推导都可以参考[1], MonoLaneMapping对应alpha参考[4]
-- Basic是基础的版本, 没有考虑参数tao, 只有alpha, 没有找到添加tao时对应的参考文献, [1]中没有写
-- 注意Basic, Simple, Simplest和MonoLaneMapping的tao表达含义不一样, 代码中分开进行了表达
-- 当alpha=0, tao=0, tao_mono_lane_mapping=0.5, 几个计算结果是完全一样的
-- Simple/Simplest有考虑参考tao和alpha, 但与MonoLaneMapping中的tao对应不上, 意义不太一样
+- Basic是基础的版本, 没有考虑参数tau, 只有alpha, 没有找到添加tau时对应的参考文献, [1]中没有写
+- 注意Basic, Simple, Simplest和MonoLaneMapping的tau表达含义不一样, 代码中分开进行了表达
+- 当alpha=0, tau=0, tau_mono_lane_mapping=0.5, 几个计算结果是完全一样的
+- Simple/Simplest有考虑参考tau和alpha, 但与MonoLaneMapping中的tau对应不上, 意义不太一样
 MonoLaneMapping对应alpha=0的情况, 没有参数考虑其他情况
 -  
 
@@ -30,9 +30,9 @@ class CalculateMethod(Enum):
 
 
 class CatmullRomSpline:
-    def __init__(self, tao=0.5, tao_mono_lane_mapping=0.5, alpha=0.5, cal_method=CalculateMethod.Simple):
-        self.tao = tao  # tao for Simple/Simplest
-        self.tao_mono_lane_mapping = tao_mono_lane_mapping  # tao for MonoLaneMapping
+    def __init__(self, tau=0.5, tau_mono_lane_mapping=0.5, alpha=0.5, cal_method=CalculateMethod.Simple):
+        self.tau = tau  # tau for Simple/Simplest
+        self.tau_mono_lane_mapping = tau_mono_lane_mapping  # tau for MonoLaneMapping
         self.alpha = alpha  # alpha, 0: uniform, 0.5: centripetal, 1: chordal
         self.cal_method = cal_method  # calculate method
 
@@ -85,8 +85,8 @@ class CatmullRomSpline:
         A3 = (t3 - t) / (t3 - t2) * p2 + (t - t2) / (t3 - t2) * p3
         B1 = (t2 - t) / (t2 - t0) * A1 + (t - t0) / (t2 - t0) * A2
         B2 = (t3 - t) / (t3 - t1) * A2 + (t - t1) / (t3 - t1) * A3
-        # NOTE: how to add tao, no document or reference, below is not correct
-        # return (1 - self.tao) * (t2 - t) / (t2 - t1) * B1 + (1 - self.tao) * (t - t1) / (t2 - t1) * B2
+        # NOTE: how to add tau, no document or reference, below is not correct
+        # return (1 - self.tau) * (t2 - t) / (t2 - t1) * B1 + (1 - self.tau) * (t - t1) / (t2 - t1) * B2
         return (t2 - t) / (t2 - t1) * B1 + (t - t1) / (t2 - t1) * B2
 
     def __compute_single_points_simple(self, ctrl_points: np.ndarray, num_points=20):
@@ -103,8 +103,8 @@ class CatmullRomSpline:
         t2 = self.__tj(t1, p1, p2)
         t3 = self.__tj(t2, p2, p3)
 
-        m1 = (1 - self.tao) * (t2 - t1) * ((p1 - p0) / (t1 - t0) - (p2 - p0) / (t2 - t0) + (p2 - p1) / (t2 - t1))
-        m2 = (1 - self.tao) * (t2 - t1) * ((p2 - p1) / (t2 - t1) - (p3 - p1) / (t3 - t1) + (p3 - p2) / (t3 - t2))
+        m1 = (1 - self.tau) * (t2 - t1) * ((p1 - p0) / (t1 - t0) - (p2 - p0) / (t2 - t0) + (p2 - p1) / (t2 - t1))
+        m2 = (1 - self.tau) * (t2 - t1) * ((p2 - p1) / (t2 - t1) - (p3 - p1) / (t3 - t1) + (p3 - p2) / (t3 - t2))
         a = 2 * (p1 - p2) + m1 + m2
         b = -3 * (p1 - p2) - 2 * m1 - m2
         c = m1
@@ -126,8 +126,8 @@ class CatmullRomSpline:
         t12 = np.linalg.norm(p1 - p2) ** self.alpha
         t23 = np.linalg.norm(p2 - p3) ** self.alpha
 
-        m1 = (1 - self.tao) * (p2 - p1 + t12 * ((p1 - p0) / t01 - (p2 - p0) / (t01 + t12)))
-        m2 = (1 - self.tao) * (p2 - p1 + t12 * ((p3 - p2) / t23 - (p3 - p1) / (t12 + t23)))
+        m1 = (1 - self.tau) * (p2 - p1 + t12 * ((p1 - p0) / t01 - (p2 - p0) / (t01 + t12)))
+        m2 = (1 - self.tau) * (p2 - p1 + t12 * ((p3 - p2) / t23 - (p3 - p1) / (t12 + t23)))
         a = 2 * (p1 - p2) + m1 + m2
         b = -3 * (p1 - p2) - 2 * m1 - m2
         c = m1
@@ -149,18 +149,18 @@ class CatmullRomSpline:
         M = np.array(
             [
                 [0, 1, 0, 0],
-                [-self.tao_mono_lane_mapping, 0, self.tao_mono_lane_mapping, 0],
+                [-self.tau_mono_lane_mapping, 0, self.tau_mono_lane_mapping, 0],
                 [
-                    2 * self.tao_mono_lane_mapping,
-                    self.tao_mono_lane_mapping - 3,
-                    3 - 2 * self.tao_mono_lane_mapping,
-                    -self.tao_mono_lane_mapping,
+                    2 * self.tau_mono_lane_mapping,
+                    self.tau_mono_lane_mapping - 3,
+                    3 - 2 * self.tau_mono_lane_mapping,
+                    -self.tau_mono_lane_mapping,
                 ],
                 [
-                    -self.tao_mono_lane_mapping,
-                    2 - self.tao_mono_lane_mapping,
-                    self.tao_mono_lane_mapping - 2,
-                    self.tao_mono_lane_mapping,
+                    -self.tau_mono_lane_mapping,
+                    2 - self.tau_mono_lane_mapping,
+                    self.tau_mono_lane_mapping - 2,
+                    self.tau_mono_lane_mapping,
                 ],
             ]
         )
@@ -180,8 +180,9 @@ class CatmullRomSpline:
 
 if __name__ == '__main__':
     # common config
-    ctrl_points = np.array([[0, 1.5], [2, 2], [3, 1], [3.8, 0.55], [4, 0.5], [5, 1], [6, 2], [7, 3]])
-    tao, tao_mono_lane_mapping = 0, 0.5
+    # ctrl_points = np.array([[0, 1.5], [2, 2], [3, 1], [3.8, 0.55], [4, 0.5], [5, 1], [6, 2], [7, 3]])
+    ctrl_points = np.array([[0, 1.5], [2, 2], [3, 1], [4, 0.5], [5, 1], [6, 2], [7, 3]])
+    tau, tau_mono_lane_mapping = 0, 0.5
     # plot config
     colors = ['b', 'r', 'k', 'm']
 
@@ -191,7 +192,7 @@ if __name__ == '__main__':
     all_points = []
     for method in methods:
         # calculate catmull-rom spline points
-        spline = CatmullRomSpline(tao=tao, tao_mono_lane_mapping=tao_mono_lane_mapping, alpha=0, cal_method=method)
+        spline = CatmullRomSpline(tau=tau, tau_mono_lane_mapping=tau_mono_lane_mapping, alpha=0, cal_method=method)
         all_points.append(spline.compute_points(ctrl_points))
 
     # plot
@@ -209,7 +210,7 @@ if __name__ == '__main__':
     all_points = []
     for alpha in alphas:
         # calculate catmull-rom spline points
-        spline = CatmullRomSpline(tao=tao, alpha=alpha, cal_method=CalculateMethod.Basic)
+        spline = CatmullRomSpline(tau=tau, alpha=alpha, cal_method=CalculateMethod.Basic)
         all_points.append(spline.compute_points(ctrl_points))
 
     # plot
