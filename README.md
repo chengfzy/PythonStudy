@@ -125,6 +125,11 @@ Some study notes using `PyTorch`
     Fine tuning torchvision models.
     Ref: https://pytorch.org/tutorials/beginner/finetuning_torchvision_models_tutorial.html#
 
+#### drive_into_deep_learning
+动手学深度学习的一些示例练习
+Ref: 
+    1. https://github.com/d2l-ai/d2l-zh
+    1. https://zh.d2l.ai/
 
 #### nuScenes
 Some code about nuScenes dataset
