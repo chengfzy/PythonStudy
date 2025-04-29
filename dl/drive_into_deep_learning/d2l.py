@@ -269,7 +269,7 @@ class DataModule(d2l.HyperParameters):
 
     Defined in :numref:`subsec_oo-design-models`"""
 
-    def __init__(self, root='../data', num_workers=4):
+    def __init__(self, root='./data', num_workers=4):
         self.save_hyperparameters()
 
     def get_dataloader(self, train):
@@ -3199,8 +3199,8 @@ def load_data_fashion_mnist(batch_size, resize=None):
     if resize:
         trans.insert(0, transforms.Resize(resize))
     trans = transforms.Compose(trans)
-    mnist_train = torchvision.datasets.FashionMNIST(root="../data", train=True, transform=trans, download=True)
-    mnist_test = torchvision.datasets.FashionMNIST(root="../data", train=False, transform=trans, download=True)
+    mnist_train = torchvision.datasets.FashionMNIST(root="./data", train=True, transform=trans, download=True)
+    mnist_test = torchvision.datasets.FashionMNIST(root="./data", train=False, transform=trans, download=True)
     return (
         torch.utils.data.DataLoader(mnist_train, batch_size, shuffle=True, num_workers=get_dataloader_workers()),
         torch.utils.data.DataLoader(mnist_test, batch_size, shuffle=False, num_workers=get_dataloader_workers()),
@@ -3392,7 +3392,7 @@ def accuracy(y_hat, y):
     return float(d2l.reduce_sum(d2l.astype(cmp, y.dtype)))
 
 
-def download(url, folder='../data', sha1_hash=None):
+def download(url, folder='./data', sha1_hash=None):
     """Download a file to folder and return the local filepath.
 
     Defined in :numref:`sec_utils`"""
