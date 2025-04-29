@@ -1,7 +1,7 @@
 """
-使用LeNet进行图像分类
+使用AlexNet进行图像分类
 Ref:
-1. https://zh.d2l.ai/chapter_convolutional-neural-networks/lenet.html
+1. https://zh.d2l.ai/chapter_convolutional-modern/alexnet.html#id16
 """
 
 import logging, coloredlogs, datetime
@@ -98,32 +98,47 @@ class MyTrainer:
         self.__save_file.parent.mkdir(parents=True, exist_ok=True)
 
         batch_size = 256
-        train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
+        train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
 
         # 初始化模型参数
         net = nn.Sequential(
-            nn.Conv2d(1, 6, kernel_size=5, padding=2),
-            nn.Sigmoid(),
-            nn.AvgPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(6, 16, kernel_size=5),
-            nn.Sigmoid(),
-            nn.AvgPool2d(kernel_size=2, stride=2),
+            # 这里使用一个11*11的更大窗口来捕捉对象, 同时，步幅为4，以减少输出的高度和宽度
+            nn.Conv2d(1, 96, kernel_size=11, stride=4),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=3, stride=2),
+            # 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数
+            nn.Conv2d(96, 256, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=3, stride=2),
+            # 使用三个连续的卷积层和较小的卷积窗口, 除了最后的卷积层，输出通道的数量进一步增加
+            nn.Conv2d(256, 384, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(384, 384, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(384, 256, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Flatten(),
-            nn.Linear(16 * 5 * 5, 120),
-            nn.Sigmoid(),
-            nn.Linear(120, 84),
-            nn.Sigmoid(),
-            nn.Linear(84, 10),
+            # 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过拟合
+            nn.Linear(6400, 4096),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.Linear(4096, 4096),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            # 输出层, 由于这里使用的是Fashion-MNIST, 所以类别为10, 而非论文中的1000
+            nn.Linear(4096, 10),
         )
         logging.info(f'net: {net}')
+
         # print output shape
-        X = torch.rand(size=(1, 1, 28, 28), dtype=torch.float32)
+        X = torch.rand(size=(1, 1, 224, 224), dtype=torch.float32)
         for n, layer in enumerate(net):
             X = layer(X)
             logging.info(f'[{n}] {layer.__class__.__name__}, \toutput shape: {X.shape}')
 
         # 训练
-        lr, num_epochs = 0.9, 100
+        lr, num_epochs = 0.01, 100
         self.__train(net, train_iter, test_iter, num_epochs, lr, device='cuda:0')
 
         plt.show(block=True)
