@@ -104,6 +104,8 @@ python version using Sophus
 1. 02_non_negative_least_squares \
     Non negative least square regression
     Ref: [scikit learn example](https://scikit-learn.org/stable/auto_examples/linear_model/plot_nnls.html#sphx-glr-auto-examples-linear-model-plot-nnls-py)
+1. 03_xgboost_study \
+    使用XGBoost进行数据预测, 参考https://www.cnblogs.com/pinard/p/11114748.html
 
 #### clustering
 1. 01_dbscan \
