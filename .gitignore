@@ -114,4 +114,6 @@ temp/
 
 # data
 data/
+# output
+output/
 .history/

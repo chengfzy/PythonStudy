@@ -133,6 +133,11 @@ Ref:
     1. https://github.com/d2l-ai/d2l-zh
     1. https://zh.d2l.ai/
 
+#### openmmlab_study
+一些关于openmm_lab相关库的学习使用
+1. 01_engine_basic: 使用mmengine进行模型训练及验证
+    Ref: https://mmengine.readthedocs.io/zh-cn/latest/get_started/15_minutes.html
+
 #### nuScenes
 Some code about nuScenes dataset
 1. 01_basic: \
